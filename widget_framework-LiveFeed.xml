@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget_framework version="2.5.0d">
+  <widget title="{xen:phrase recent_activity}" class="WidgetFramework_WidgetRenderer_TemplateWithoutWrapper" position="forum_list" display_order="1" active="1">
+    <options><![CDATA[a:7:{s:8:"template";s:15:"LiveFeed_widget";s:10:"expression";s:0:"";s:21:"deactivate_for_mobile";i:0;s:10:"layout_row";i:0;s:10:"layout_col";i:0;s:14:"layout_sizeRow";i:0;s:14:"layout_sizeCol";i:0;}]]></options>
+  </widget>
+</widget_framework>

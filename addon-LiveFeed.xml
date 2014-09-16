@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<addon addon_id="LiveFeed" title="Live Feed" version_string="1.2.1" version_id="29" url="" install_callback_class="Milano_LiveFeed_Install" install_callback_method="install" uninstall_callback_class="Milano_LiveFeed_Install" uninstall_callback_method="uninstall">
+  <admin_navigation/>
+  <admin_permissions/>
+  <admin_style_properties/>
+  <admin_templates/>
+  <admin_template_modifications/>
+  <code_events/>
+  <code_event_listeners>
+    <listener event_id="load_class_controller" execute_order="10" callback_class="Milano_LiveFeed_Listener" callback_method="loadRecentActivityController" active="1" hint="XenForo_ControllerPublic_RecentActivity" description=""/>
+    <listener event_id="load_class_controller" execute_order="10" callback_class="Milano_LiveFeed_Listener" callback_method="loadAccountController" active="1" hint="XenForo_ControllerPublic_Account" description=""/>
+    <listener event_id="load_class_datawriter" execute_order="10" callback_class="Milano_LiveFeed_Listener" callback_method="loadUserDataWriter" active="1" hint="XenForo_DataWriter_User" description=""/>
+    <listener event_id="load_class_model" execute_order="10" callback_class="Milano_LiveFeed_Listener" callback_method="loadNewsFeedModel" active="1" hint="XenForo_Model_NewsFeed" description=""/>
+    <listener event_id="load_class_view" execute_order="10" callback_class="Milano_LiveFeed_Listener" callback_method="loadNewsFeedViewPublic" active="1" hint="XenForo_ViewPublic_NewsFeed_View" description=""/>
+  </code_event_listeners>
+  <cron/>
+  <email_templates/>
+  <email_template_modifications/>
+  <optiongroups>
+    <option option_id="LiveFeed_interval" edit_format="spinbox" data_type="positive_integer" can_backup="1">
+      <default_value>30</default_value>
+      <edit_format_params>min=5
+step=5</edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="newsfeed" display_order="20"/>
+    </option>
+  </optiongroups>
+  <permissions>
+    <permission_groups/>
+    <permissions/>
+    <interface_groups/>
+  </permissions>
+  <phrases>
+    <phrase title="LiveFeed_show_only_my_news_feed" version_id="25" version_string="1.1.1"><![CDATA[Show only my news feed]]></phrase>
+    <phrase title="option_LiveFeed_interval" version_id="1" version_string="1.0.0"><![CDATA[News Feed Polling Interval]]></phrase>
+    <phrase title="option_LiveFeed_interval_explain" version_id="1" version_string="1.0.0"><![CDATA[Set the amount of time in seconds to fetch the News Feed.]]></phrase>
+    <phrase title="style_property_group_LiveFeed_master" version_id="23" version_string="1.1.1"><![CDATA[Live Feed Widget]]></phrase>
+    <phrase title="style_property_group_LiveFeed_master_desc" version_id="23" version_string="1.1.1"><![CDATA[Controls the styling of Live Feed widget]]></phrase>
+    <phrase title="style_property_LiveFeedWidget_railColor_description_master" version_id="24" version_string="1.1.1"><![CDATA[]]></phrase>
+    <phrase title="style_property_LiveFeedWidget_railColor_master" version_id="24" version_string="1.1.1"><![CDATA[Scrollbar Rail Color]]></phrase>
+    <phrase title="style_property_LiveFeedWidget_railOpacity_description_master" version_id="24" version_string="1.1.1"><![CDATA[]]></phrase>
+    <phrase title="style_property_LiveFeedWidget_railOpacity_master" version_id="24" version_string="1.1.1"><![CDATA[Scrollbar Rail Opacity]]></phrase>
+    <phrase title="style_property_LiveFeedWidget_railVisible_description_master" version_id="23" version_string="1.1.1"><![CDATA[Enables scrollbar rail.]]></phrase>
+    <phrase title="style_property_LiveFeedWidget_railVisible_master" version_id="24" version_string="1.1.1"><![CDATA[Scrollbar Rail Visible]]></phrase>
+    <phrase title="style_property_LiveFeedWidget_scrollColor_description_master" version_id="24" version_string="1.1.1"><![CDATA[]]></phrase>
+    <phrase title="style_property_LiveFeedWidget_scrollColor_master" version_id="24" version_string="1.1.1"><![CDATA[Scrollbar Color]]></phrase>
+    <phrase title="style_property_LiveFeedWidget_scrollDistance_description_master" version_id="24" version_string="1.1.1"><![CDATA[Distance in pixels from the edge of the parent element where scrollbar should appear]]></phrase>
+    <phrase title="style_property_LiveFeedWidget_scrollDistance_master" version_id="24" version_string="1.1.1"><![CDATA[Scrollbar Distance]]></phrase>
+    <phrase title="style_property_LiveFeedWidget_scrollHeight_description_master" version_id="24" version_string="1.1.1"><![CDATA[]]></phrase>
+    <phrase title="style_property_LiveFeedWidget_scrollHeight_master" version_id="24" version_string="1.1.1"><![CDATA[Scrollbar Height]]></phrase>
+    <phrase title="style_property_LiveFeedWidget_scrollSize_description_master" version_id="23" version_string="1.1.1"><![CDATA[]]></phrase>
+    <phrase title="style_property_LiveFeedWidget_scrollSize_master" version_id="24" version_string="1.1.1"><![CDATA[Scrollbar Size]]></phrase>
+    <phrase title="style_property_LiveFeedWidget_scrollVisible_description_master" version_id="23" version_string="1.1.1"><![CDATA[Disables scrollbar hide]]></phrase>
+    <phrase title="style_property_LiveFeedWidget_scrollVisible_master" version_id="24" version_string="1.1.1"><![CDATA[Scrollbar Visible]]></phrase>
+  </phrases>
+  <route_prefixes>
+    <route_type type="public">
+      <prefix original_prefix="live-feed" class="Milano_LiveFeed_Route_Prefix_Feed" build_link="none"/>
+    </route_type>
+  </route_prefixes>
+  <style_properties>
+    <property property_name="LiveFeedWidget_scrollSize" property_type="scalar" definition="1" group_name="LiveFeed" title="Scrollbar Size" description="" css_components="" scalar_type="number" scalar_parameters="" display_order="20" sub_group=""><![CDATA[7px]]></property>
+    <property property_name="LiveFeedWidget_scrollVisible" property_type="scalar" definition="1" group_name="LiveFeed" title="Scrollbar Visible" description="Disables scrollbar hide" css_components="" scalar_type="boolean" scalar_parameters="" display_order="110" sub_group="Visible"><![CDATA[0]]></property>
+    <property property_name="LiveFeedWidget_railVisible" property_type="scalar" definition="1" group_name="LiveFeed" title="Scrollbar Rail Visible" description="Enables scrollbar rail." css_components="" scalar_type="boolean" scalar_parameters="" display_order="120" sub_group="Visible"><![CDATA[0]]></property>
+    <property property_name="LiveFeedWidget_scrollDistance" property_type="scalar" definition="1" group_name="LiveFeed" title="Scrollbar Distance" description="Distance in pixels from the edge of the parent element where scrollbar should appear" css_components="" scalar_type="number" scalar_parameters="" display_order="20" sub_group=""><![CDATA[1px]]></property>
+    <property property_name="LiveFeedWidget_scrollHeight" property_type="scalar" definition="1" group_name="LiveFeed" title="Scrollbar Height" description="" css_components="" scalar_type="number" scalar_parameters="" display_order="10" sub_group=""><![CDATA[300px]]></property>
+    <property property_name="LiveFeedWidget_scrollColor" property_type="scalar" definition="1" group_name="LiveFeed" title="Scrollbar Color" description="" css_components="" scalar_type="color" scalar_parameters="" display_order="210" sub_group="Color"><![CDATA[rgb(0, 0, 0)]]></property>
+    <property property_name="LiveFeedWidget_railColor" property_type="scalar" definition="1" group_name="LiveFeed" title="Scrollbar Rail Color" description="" css_components="" scalar_type="color" scalar_parameters="" display_order="220" sub_group="Color"><![CDATA[#333333]]></property>
+    <property property_name="LiveFeedWidget_railOpacity" property_type="scalar" definition="1" group_name="LiveFeed" title="Scrollbar Rail Opacity" description="" css_components="" scalar_type="number" scalar_parameters="" display_order="230" sub_group="Color"><![CDATA[0.2]]></property>
+    <group group_name="LiveFeed" display_order="2200">
+      <title>Live Feed Widget</title>
+      <description>Controls the styling of Live Feed widget</description>
+    </group>
+  </style_properties>
+  <templates>
+    <template title="LiveFeed_widget" version_id="25" version_string="1.1.1"><![CDATA[<xen:require js="js/xenforo/news_feed.js" />
+<xen:require js="js/Milano/LiveFeed/feed_preview.js" />
+<xen:require js="js/Milano/slimscroll.js" />
+<xen:require css="LiveFeed_widget.css" />
+
+<div class="LiveFeedWidget">
+	<div class="secondaryContent widget" id="LiveFeed">
+		<div class="blockHeading">
+			<h3 rel="menu" class="widgetHeading">{xen:phrase recent_activity}</h3>
+			<div class="options Popup PopupControl PopupClosed">
+				<a rel="menu"></a>
+				<div class="Menu JsOnly">
+					<ul class="secondaryContent blockLinksList">						
+						<form action="{xen:link account/toggle-live-feed}" method="post" class="AutoValidator LiveFeedWidgetForm" data-redirect="on">
+							<li>
+								<label><input type="checkbox" name="livefeed_widget_personal" value="1" class="SubmitOnChange" {xen:checked $visitor.livefeed_widget_personal} />
+									{xen:phrase LiveFeed_show_only_my_news_feed}</label>
+								<input type="hidden" name="_xfToken" value="{$visitor.csrf_token_page}" />
+							</li>
+						</form>
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<div class="newsFeed SlimScroll" 
+			{xen:if {xen:property LiveFeedWidget_scrollSize}, 'data-size="{xen:jsescape {xen:property LiveFeedWidget_scrollSize}}"'} 
+			{xen:if {xen:property LiveFeedWidget_scrollHeight}, 'data-height="{xen:jsescape {xen:property LiveFeedWidget_scrollHeight}}"'} 
+			{xen:if {xen:property LiveFeedWidget_scrollDistance}, 'data-height="{xen:jsescape {xen:property LiveFeedWidget_scrollDistance}}"'} 
+			{xen:if {xen:property LiveFeedWidget_scrollColor}, 'data-color="{xen:jsescape {xen:property LiveFeedWidget_scrollColor}}"'} 
+			{xen:if {xen:property LiveFeedWidget_railColor}, 'data-rail-color="{xen:jsescape {xen:property LiveFeedWidget_railColor}}"'} 
+			{xen:if {xen:property LiveFeedWidget_railOpacity}, 'data-rail-opacity="{xen:jsescape {xen:property LiveFeedWidget_railOpacity}}"'} 
+			data-always-visible="{xen:property LiveFeedWidget_scrollVisible}" 
+			data-rail-visible="{xen:property LiveFeedWidget_railVisible}">
+			
+			<xen:include template="news_feed">
+				<xen:set var="$noContentHtml"><div id="newsFeedEmpty">
+					<xen:if is="{$visitor.livefeed_widget_personal}">
+						{xen:phrase your_news_feed_is_currently_empty} <br><a href="{xen:link account/following}">{xen:phrase follow_people_to_fill_it}</a>
+					<xen:else />
+						{xen:phrase news_feed_is_currently_empty}
+					</xen:if>
+				</div></xen:set>
+			</xen:include>
+			<xen:include template="news_feed_end">
+				<xen:set var="$itemLoaderUrl">{xen:if {$visitor.livefeed_widget_personal}, '{xen:link account/news-feed}', '{xen:link recent-activity}'}</xen:set>
+			</xen:include>
+			<xen:include template="preview_tooltip" />
+		</div>
+	</div>
+</div>]]></template>
+    <template title="LiveFeed_widget.css" version_id="25" version_string="1.1.1"><![CDATA[.LiveFeedWidget
+{
+	{xen:property section.margin}
+}
+	.LiveFeedWidget .secondaryContent
+	{
+		padding: 1px;
+	}
+	
+	.LiveFeedWidget .blockHeading
+	{
+		position: relative;
+	}
+		.LiveFeedWidget .blockHeading:hover .options
+		{
+			opacity: 1;
+		}
+	
+		.LiveFeedWidget .blockHeading .options
+		{
+			position: absolute;
+			right: 10px;
+			top: 4px;
+			opacity: 0.3;
+		}
+
+	.LiveFeedWidget .widgetHeading
+	{
+		{xen:property sidebarBlockHeading}
+
+		margin: 10px;
+	}
+
+	.LiveFeedWidget .newsFeed .sectionFooter
+	{
+		display: none;
+	}
+
+	.LiveFeedWidget .eventList .primaryContent
+	{
+		background: transparent;
+	}
+
+	.LiveFeedWidget .event .avatar img, 
+	.LiveFeedWidget .event .icon img
+	{
+		width: 32px;
+		height: 32px;
+	}
+
+	.LiveFeedWidget .event .content
+	{
+		margin-left: 45px;
+	}
+
+.LiveFeedPreviewTooltip
+{
+	{xen:property previewTooltip}
+	border: 1px solid {xen:property dimmedTextColor};
+	border-radius: 0;
+}
+
+	.LiveFeedPreviewTooltip .arrow
+	{
+		border: 10px solid transparent;
+		border-left:  10px solid {xen:property contentText};
+		border-right: 1px none black;
+		position: absolute;
+		top: 6px;
+		left: auto;
+		bottom: auto;
+		right: -10px;
+	}
+
+	.LiveFeedPreviewTooltip .arrow span
+	{
+		border: 10px solid transparent;
+		border-left:  10px solid {xen:property contentBackground};
+		border-right: 1px none black;
+		position: absolute;
+		right: 1px;
+		top: -10px;
+	}
+
+	.LiveFeedPreviewTooltip .section
+	{
+		margin: 0 auto;
+	}
+	
+#newsFeedEmpty
+{
+	text-align: center;
+}
+]]></template>
+  </templates>
+  <public_template_modifications>
+    <modification template="news_feed_end" modification_key="LiveFeed_news_feed_end_newest_item" description="" execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[class="NewsFeedLoader"]]></find>
+      <replace><![CDATA[$0 data-pollingInterval="{$xenOptions.LiveFeed_interval}" data-newestItemId="{$newestItemId}"]]></replace>
+    </modification>
+    <modification template="news_feed_item" modification_key="LiveFeed_news_feed_item_img" description="Replace avatar from background image to img tag" execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[<xen:avatar user="$item" size="s" class="icon"]]></find>
+      <replace><![CDATA[$0 img="true"]]></replace>
+    </modification>
+    <modification template="news_feed_item" modification_key="LiveFeed_news_feed_item_preview" description="Add feed preview url" execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[data-author=]]></find>
+      <replace><![CDATA[data-feedPreviewUrl="{xen:link full:live-feed, '', 'content_type={$item.content_type}', 'content_id={$item.content_id}'}" $0]]></replace>
+    </modification>
+    <modification template="news_feed" modification_key="LiveFeed_news_feed_js" description="Add live feed js" execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[<xen:require js="js/xenforo/news_feed.js" />]]></find>
+      <replace><![CDATA[$0
+<xen:require js="js/Milano/LiveFeed/live_feed.js" />]]></replace>
+    </modification>
+  </public_template_modifications>
+  <bb_code_media_sites/>
+  <bb_codes/>
+</addon>
