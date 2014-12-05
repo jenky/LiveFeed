@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<addon addon_id="LiveFeed" title="Live Feed" version_string="1.2.1" version_id="29" url="" install_callback_class="Milano_LiveFeed_Install" install_callback_method="install" uninstall_callback_class="Milano_LiveFeed_Install" uninstall_callback_method="uninstall">
+<addon addon_id="LiveFeed" title="Live Feed" version_string="1.3.0" version_id="30" url="" install_callback_class="Milano_LiveFeed_Install" install_callback_method="install" uninstall_callback_class="Milano_LiveFeed_Install" uninstall_callback_method="uninstall">
   <admin_navigation/>
   <admin_permissions/>
   <admin_style_properties/>
@@ -220,6 +220,10 @@ step=5</edit_format_params>
 ]]></template>
   </templates>
   <public_template_modifications>
+    <modification template="forum_list" modification_key="LiveFeed_forum_list_sidebar" description="Add LiveFeed widget to sidebar." execution_order="10" enabled="1" action="callback">
+      <find><![CDATA[#<xen:hook name=\"forum_list_sidebar\">\n(.*?)</xen:hook>#si]]></find>
+      <replace><![CDATA[Milano_LiveFeed_Widget::templateModification]]></replace>
+    </modification>
     <modification template="news_feed_end" modification_key="LiveFeed_news_feed_end_newest_item" description="" execution_order="10" enabled="1" action="str_replace">
       <find><![CDATA[class="NewsFeedLoader"]]></find>
       <replace><![CDATA[$0 data-pollingInterval="{$xenOptions.LiveFeed_interval}" data-newestItemId="{$newestItemId}"]]></replace>

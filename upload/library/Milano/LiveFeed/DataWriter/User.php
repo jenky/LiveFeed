@@ -8,7 +8,7 @@ class Milano_LiveFeed_DataWriter_User extends XFCP_Milano_LiveFeed_DataWriter_Us
 		
 		$fields['xf_user_option']['livefeed_widget_personal'] = array(
 			'type' => self::TYPE_BOOLEAN,
-			'default' => 1
+			'default' => 0
 		);
 		
 		return $fields;
