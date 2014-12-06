@@ -1,15 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<addon addon_id="LiveFeed" title="Live Feed" version_string="1.3.0" version_id="30" url="" install_callback_class="Milano_LiveFeed_Install" install_callback_method="install" uninstall_callback_class="Milano_LiveFeed_Install" uninstall_callback_method="uninstall">
+<addon addon_id="LiveFeed" title="Live Feed" version_string="1.3.0" version_id="31" url="" install_callback_class="Milano_LiveFeed_Install" install_callback_method="install" uninstall_callback_class="Milano_LiveFeed_Install" uninstall_callback_method="uninstall">
   <admin_navigation/>
   <admin_permissions/>
   <admin_style_properties/>
-  <admin_templates/>
+  <admin_templates>
+    <template title="LiveFeed_option_widget"><![CDATA[<xen:checkboxunit label="">
+	<xen:option name="{$fieldPrefix}[{$preparedOption.option_id}][enabled]" selected="{$preparedOption.option_value.enabled}" label="{$preparedOption.title}" hint="{xen:raw $preparedOption.explain}">
+		<xen:disabled>
+			{xen:phrase position}:
+			<xen:select name="{$fieldPrefix}[{$preparedOption.option_id}][position]" value="{$preparedOption.option_value.position}" inputclass="value autoSize">
+				<xen:option value="visitor_panel">{xen:phrase LiveFeed_below_visitor_panel}</xen:option>
+				<xen:option value="online_users">{xen:phrase LiveFeed_below_online_users}</xen:option>
+				<xen:option value="profile_post">{xen:phrase LiveFeed_below_profile_posts}</xen:option>
+				<xen:option value="forum_stats">{xen:phrase LiveFeed_below_forum_stats}</xen:option>
+				<xen:option value="share_page">{xen:phrase LiveFeed_below_share_page}</xen:option>	
+			</xen:select>
+		</xen:disabled>
+	</xen:option>
+	<xen:html>
+		<input type="hidden" name="{$listedFieldName}" value="{$preparedOption.option_id}" />
+		{xen:raw $editLink}
+	</xen:html>
+</xen:checkboxunit>]]></template>
+  </admin_templates>
   <admin_template_modifications/>
   <code_events/>
   <code_event_listeners>
     <listener event_id="load_class_controller" execute_order="10" callback_class="Milano_LiveFeed_Listener" callback_method="loadRecentActivityController" active="1" hint="XenForo_ControllerPublic_RecentActivity" description=""/>
     <listener event_id="load_class_controller" execute_order="10" callback_class="Milano_LiveFeed_Listener" callback_method="loadAccountController" active="1" hint="XenForo_ControllerPublic_Account" description=""/>
     <listener event_id="load_class_datawriter" execute_order="10" callback_class="Milano_LiveFeed_Listener" callback_method="loadUserDataWriter" active="1" hint="XenForo_DataWriter_User" description=""/>
+    <listener event_id="load_class_datawriter" execute_order="10" callback_class="Milano_LiveFeed_Listener" callback_method="loadOptionDataWriter" active="1" hint="XenForo_DataWriter_Option" description=""/>
     <listener event_id="load_class_model" execute_order="10" callback_class="Milano_LiveFeed_Listener" callback_method="loadNewsFeedModel" active="1" hint="XenForo_Model_NewsFeed" description=""/>
     <listener event_id="load_class_view" execute_order="10" callback_class="Milano_LiveFeed_Listener" callback_method="loadNewsFeedViewPublic" active="1" hint="XenForo_ViewPublic_NewsFeed_View" description=""/>
   </code_event_listeners>
@@ -17,12 +37,21 @@
   <email_templates/>
   <email_template_modifications/>
   <optiongroups>
+    <group group_id="LiveFeed" display_order="1357" debug_only="0"/>
     <option option_id="LiveFeed_interval" edit_format="spinbox" data_type="positive_integer" can_backup="1">
       <default_value>30</default_value>
       <edit_format_params>min=5
 step=5</edit_format_params>
       <sub_options></sub_options>
+      <relation group_id="LiveFeed" display_order="20"/>
       <relation group_id="newsfeed" display_order="20"/>
+    </option>
+    <option option_id="LiveFeed_widget" edit_format="template" data_type="array" can_backup="1">
+      <default_value>a:2:{s:7:"enabled";b:0;s:8:"position";b:0;}</default_value>
+      <edit_format_params>LiveFeed_option_widget</edit_format_params>
+      <sub_options>enabled
+position</sub_options>
+      <relation group_id="LiveFeed" display_order="110"/>
     </option>
   </optiongroups>
   <permissions>
@@ -31,9 +60,18 @@ step=5</edit_format_params>
     <interface_groups/>
   </permissions>
   <phrases>
+    <phrase title="LiveFeed_below_forum_stats" version_id="30" version_string="1.3.0"><![CDATA[Below forum stats]]></phrase>
+    <phrase title="LiveFeed_below_online_users" version_id="30" version_string="1.3.0"><![CDATA[Below online users]]></phrase>
+    <phrase title="LiveFeed_below_profile_posts" version_id="30" version_string="1.3.0"><![CDATA[Below profile posts]]></phrase>
+    <phrase title="LiveFeed_below_share_page" version_id="30" version_string="1.3.0"><![CDATA[Below share page]]></phrase>
+    <phrase title="LiveFeed_below_visitor_panel" version_id="30" version_string="1.3.0"><![CDATA[Below visitor panel]]></phrase>
     <phrase title="LiveFeed_show_only_my_news_feed" version_id="25" version_string="1.1.1"><![CDATA[Show only my news feed]]></phrase>
+    <phrase title="option_group_LiveFeed" version_id="30" version_string="1.3.0"><![CDATA[LiveFeed Options]]></phrase>
+    <phrase title="option_group_LiveFeed_description" version_id="30" version_string="1.3.0"><![CDATA[]]></phrase>
     <phrase title="option_LiveFeed_interval" version_id="1" version_string="1.0.0"><![CDATA[News Feed Polling Interval]]></phrase>
     <phrase title="option_LiveFeed_interval_explain" version_id="1" version_string="1.0.0"><![CDATA[Set the amount of time in seconds to fetch the News Feed.]]></phrase>
+    <phrase title="option_LiveFeed_widget" version_id="30" version_string="1.3.0"><![CDATA[Widget]]></phrase>
+    <phrase title="option_LiveFeed_widget_explain" version_id="30" version_string="1.3.0"><![CDATA[]]></phrase>
     <phrase title="style_property_group_LiveFeed_master" version_id="23" version_string="1.1.1"><![CDATA[Live Feed Widget]]></phrase>
     <phrase title="style_property_group_LiveFeed_master_desc" version_id="23" version_string="1.1.1"><![CDATA[Controls the styling of Live Feed widget]]></phrase>
     <phrase title="style_property_LiveFeedWidget_railColor_description_master" version_id="24" version_string="1.1.1"><![CDATA[]]></phrase>
@@ -73,7 +111,7 @@ step=5</edit_format_params>
     </group>
   </style_properties>
   <templates>
-    <template title="LiveFeed_widget" version_id="25" version_string="1.1.1"><![CDATA[<xen:require js="js/xenforo/news_feed.js" />
+    <template title="LiveFeed_widget" version_id="30" version_string="1.3.0"><![CDATA[<xen:require js="js/xenforo/news_feed.js" />
 <xen:require js="js/Milano/LiveFeed/feed_preview.js" />
 <xen:require js="js/Milano/slimscroll.js" />
 <xen:require css="LiveFeed_widget.css" />
@@ -82,20 +120,22 @@ step=5</edit_format_params>
 	<div class="secondaryContent widget" id="LiveFeed">
 		<div class="blockHeading">
 			<h3 rel="menu" class="widgetHeading">{xen:phrase recent_activity}</h3>
-			<div class="options Popup PopupControl PopupClosed">
-				<a rel="menu"></a>
-				<div class="Menu JsOnly">
-					<ul class="secondaryContent blockLinksList">						
-						<form action="{xen:link account/toggle-live-feed}" method="post" class="AutoValidator LiveFeedWidgetForm" data-redirect="on">
-							<li>
-								<label><input type="checkbox" name="livefeed_widget_personal" value="1" class="SubmitOnChange" {xen:checked $visitor.livefeed_widget_personal} />
-									{xen:phrase LiveFeed_show_only_my_news_feed}</label>
-								<input type="hidden" name="_xfToken" value="{$visitor.csrf_token_page}" />
-							</li>
-						</form>
-					</ul>
+			<xen:if is="{$visitor.user_id}">
+				<div class="options Popup PopupControl PopupClosed">
+					<a rel="menu"></a>
+					<div class="Menu JsOnly">
+						<ul class="secondaryContent blockLinksList">						
+							<form action="{xen:link account/toggle-live-feed}" method="post" class="AutoValidator LiveFeedWidgetForm" data-redirect="on">
+								<li>
+									<label><input type="checkbox" name="livefeed_widget_personal" value="1" class="SubmitOnChange" {xen:checked $visitor.livefeed_widget_personal} />
+										{xen:phrase LiveFeed_show_only_my_news_feed}</label>
+									<input type="hidden" name="_xfToken" value="{$visitor.csrf_token_page}" />
+								</li>
+							</form>
+						</ul>
+					</div>
 				</div>
-			</div>
+			</xen:if>
 		</div>
 		
 		<div class="newsFeed SlimScroll" 

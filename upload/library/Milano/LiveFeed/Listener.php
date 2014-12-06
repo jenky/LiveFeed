@@ -26,4 +26,9 @@ class Milano_LiveFeed_Listener
     {
         $extend[] = 'Milano_LiveFeed_DataWriter_User';
     }
+
+    public static function loadOptionDataWriter($class, array &$extend)
+    {
+        $extend[] = 'Milano_LiveFeed_DataWriter_Option';
+    }
 }
