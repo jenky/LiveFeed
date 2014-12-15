@@ -42,7 +42,6 @@
                     $.context(this, 'display'),
                     { error: false, global: false }
                 );
-                //console.log('Before: ' + this.$element.data('newestitemid'));
             }
             return false;
         },
@@ -53,14 +52,18 @@
 
             if (XenForo.hasResponseError(ajaxData))
             {
-                return false;
+                return;
             }
 
             if (ajaxData.newestItemId)
             {
+                if (this.$element.data('newestitemid') >= ajaxData.newestItemId)
+                {
+                    return;
+                }
+
                 this.$element.data('newestitemid', ajaxData.newestItemId);
             }
-            //console.log('After: ' + this.$element.data('newestitemid'));
 
             if (XenForo.hasTemplateHtml(ajaxData))
             {

@@ -31,4 +31,9 @@ class Milano_LiveFeed_Listener
     {
         $extend[] = 'Milano_LiveFeed_DataWriter_Option';
     }
+
+    public static function loadOptionControllerAdmin($class, array &$extend)
+    {
+        $extend[] = 'Milano_LiveFeed_ControllerAdmin_Option';
+    }
 }
