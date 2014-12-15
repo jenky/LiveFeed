@@ -8,7 +8,7 @@ This addon transform both everyone's News Feed (Recent Activity) and personal Ne
 
 ## Features:
  * Auto update News Feed.
- * Recent Activity widget (LIVE) (require [[bd] Widget Framework](http://xenforo.com/community/resources/bd-widget-framework.297/))
+ * Recent Activity widget (LIVE) ~~(require [[bd] Widget Framework](http://xenforo.com/community/resources/bd-widget-framework.297/))~~
 
 ## Installation:
  * Download the zip file.
