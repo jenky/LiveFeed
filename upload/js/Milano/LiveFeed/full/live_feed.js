@@ -38,7 +38,7 @@
             {
                 this.xhr = XenForo.ajax(
                     'index.php?recent-activity/',
-                    { live_feed: this.$element.data('newestitemid'), referer: this.$element.attr('href') },
+                    { live_feed: this.$element.data('newestitemid'), referer: this.$element.attr('href'), source: this.$element.data('source') },
                     $.context(this, 'display'),
                     { error: false, global: false }
                 );

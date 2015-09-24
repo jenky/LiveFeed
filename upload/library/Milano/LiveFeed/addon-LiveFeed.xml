@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<addon addon_id="LiveFeed" title="Live Feed" version_string="1.3.0" version_id="32" url="" install_callback_class="Milano_LiveFeed_Install" install_callback_method="install" uninstall_callback_class="Milano_LiveFeed_Install" uninstall_callback_method="uninstall">
+<addon addon_id="LiveFeed" title="Live Feed" version_string="1.4.0" version_id="34" url="" install_callback_class="Milano_LiveFeed_Install" install_callback_method="install" uninstall_callback_class="Milano_LiveFeed_Install" uninstall_callback_method="uninstall">
   <admin_navigation/>
   <admin_permissions/>
   <admin_style_properties/>
@@ -101,6 +101,7 @@
   <admin_template_modifications/>
   <code_events/>
   <code_event_listeners>
+    <listener event_id="init_dependencies" execute_order="10" callback_class="Milano_LiveFeed_Listener" callback_method="initDependencies" active="1" hint="" description=""/>
     <listener event_id="load_class_controller" execute_order="10" callback_class="Milano_LiveFeed_Listener" callback_method="loadRecentActivityController" active="1" hint="XenForo_ControllerPublic_RecentActivity" description=""/>
     <listener event_id="load_class_controller" execute_order="10" callback_class="Milano_LiveFeed_Listener" callback_method="loadAccountController" active="1" hint="XenForo_ControllerPublic_Account" description=""/>
     <listener event_id="load_class_controller" execute_order="10" callback_class="Milano_LiveFeed_Listener" callback_method="loadOptionControllerAdmin" active="1" hint="XenForo_ControllerAdmin_Option" description=""/>
@@ -183,10 +184,10 @@ position</sub_options>
     </group>
   </style_properties>
   <templates>
-    <template title="LiveFeed_widget" version_id="31" version_string="1.3.0"><![CDATA[<xen:if is="{$xenOptions.enableNewsFeed}">
+    <template title="LiveFeed_widget" version_id="33" version_string="1.3.0"><![CDATA[<xen:if is="{$xenOptions.enableNewsFeed}">
 
 <xen:require js="js/xenforo/news_feed.js" />
-<xen:require js="js/Milano/LiveFeed/feed_preview.js" />
+<xen:comment><xen:require js="js/Milano/LiveFeed/feed_preview.js" /></xen:comment>
 <xen:require js="js/Milano/slimscroll.js" />
 <xen:require css="LiveFeed_widget.css" />
 
@@ -342,7 +343,10 @@ position</sub_options>
     </modification>
     <modification template="news_feed_end" modification_key="LiveFeed_news_feed_end_newest_item" description="" execution_order="10" enabled="1" action="str_replace">
       <find><![CDATA[class="NewsFeedLoader"]]></find>
-      <replace><![CDATA[$0 data-pollingInterval="{$xenOptions.LiveFeed_interval}" data-newestItemId="{$newestItemId}"]]></replace>
+      <replace><![CDATA[$0 
+data-pollingInterval="{$xenOptions.LiveFeed_interval}" 
+data-newestItemId="{$newestItemId}" 
+data-source="{xen:helper feedSource, $controllerName}"]]></replace>
     </modification>
     <modification template="news_feed_item" modification_key="LiveFeed_news_feed_item_img" description="Replace avatar from background image to img tag" execution_order="10" enabled="1" action="str_replace">
       <find><![CDATA[<xen:avatar user="$item" size="s" class="icon"]]></find>

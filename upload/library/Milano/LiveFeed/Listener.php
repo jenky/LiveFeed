@@ -36,4 +36,11 @@ class Milano_LiveFeed_Listener
     {
         $extend[] = 'Milano_LiveFeed_ControllerAdmin_Option';
     }
+
+    public static function initDependencies(XenForo_Dependencies_Abstract $dependencies, array $data)
+    {        
+        XenForo_Template_Helper_Core::$helperCallbacks += array(
+            'feedsource' => array('Milano_LiveFeed_Source', 'getSourceName'),
+        );
+    }
 }

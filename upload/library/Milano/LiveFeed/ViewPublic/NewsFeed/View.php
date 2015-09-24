@@ -10,40 +10,43 @@ class Milano_LiveFeed_ViewPublic_NewsFeed_View extends XFCP_Milano_LiveFeed_View
 
 		if (isset($this->_params['liveFeed']))
 		{
-			if (!XenForo_Application::getOptions()->useFriendlyUrls)
+			$source = $this->_params['source'];
+
+			switch ($source) 
 			{
-				$this->_params['referer'] = str_replace('index.php?', '', $this->_params['referer']);
-			}
+				case Milano_LiveFeed_Source::RECENT_ACTIVITY:
+				case Milano_LiveFeed_Source::FORUM:
+					// everyone news feed
+					$liveFeed = self::_getNewsFeedModel()->getNewsFeed(array('news_feed_id' => array('>', $this->_params['liveFeed'])));
+					break;
 
-			if ($this->_params['referer'] == $this->_getReplaceRoute('recent-activity/') || $this->_params['referer'] == '.')
-			{
-				// everyone news feed
-				$liveFeed = self::_getNewsFeedModel()->getNewsFeed(array('news_feed_id' => array('>', $this->_params['liveFeed'])));
-			}
-			else if ($this->_params['referer'] == $this->_getReplaceRoute('account/news-feed'))
-			{
-				// personal news feed
-				$visitor = XenForo_Visitor::getInstance();
+				case Milano_LiveFeed_Source::ACCOUNT:
+					// personal news feed
+					$visitor = XenForo_Visitor::getInstance();
 
-				$liveFeed = self::_getNewsFeedModel()->getLiveFeedForUser($visitor->toArray(), $this->_params['liveFeed']);
-			}
-			else if (strpos($this->_params['referer'], $this->_getReplaceRoute('members/')) !== false)
-			{
-				// recent activity tab
-				$parts = explode('/', $this->_params['referer']);
-				$user = explode(XenForo_Application::URL_ID_DELIMITER, $parts[1]);
+					$liveFeed = self::_getNewsFeedModel()->getLiveFeedForUser($visitor->toArray(), $this->_params['liveFeed']);
+					break;
+				
+				case Milano_LiveFeed_Source::MEMBER:
+					// recent activity tab
+					$parts = explode('/', $this->_params['referer']);
+					$user = explode(XenForo_Application::URL_ID_DELIMITER, $parts[1]);
 
-				if (isset($user[1]) && is_numeric($user[1]))
-				{
-					$userId = intval($user[1]);
+					if (isset($user[1]) && is_numeric($user[1]))
+					{
+						$userId = intval($user[1]);
 
-					$conditions = array(
-						'user_id' => $userId,
-						'news_feed_id' => array('>', $this->_params['liveFeed'])
-					);
+						$conditions = array(
+							'user_id' => $userId,
+							'news_feed_id' => array('>', $this->_params['liveFeed'])
+						);
 
-					$liveFeed = self::_getNewsFeedModel()->getNewsFeed($conditions);
-				}
+						$liveFeed = self::_getNewsFeedModel()->getNewsFeed($conditions);
+					}
+					break;
+
+				default:
+					break;
 			}
 
 			if (!empty($liveFeed))
@@ -60,48 +63,6 @@ class Milano_LiveFeed_ViewPublic_NewsFeed_View extends XFCP_Milano_LiveFeed_View
 			'newestItemId' => $this->_params['newestItemId'],
 			'feedEnds' => $this->_params['feedEnds']
 		));
-	}
-
-	protected function _getReplaceRoute($prefix)
-	{
-		$substr = false;
-		if (substr($prefix, -1) == '/') 
-		{
-			$prefix = substr_replace($prefix , "", -1);
-			$substr = true;
-		}
-
-		$routeFilters = $this->_getRouteFilters();
-
-		if (isset($routeFilters[$prefix]))
-		{
-			foreach ($routeFilters[$prefix] as $route) 
-			{
-				list($from, $to) = XenForo_Link::translateRouteFilterToRegex(
-					$route['find_route'], $route['replace_route']
-				);
-
-				return $to;
-			}
-		}
-
-		return $substr ? $prefix . '/' : $prefix;
-	}
-
-	protected function _getRouteFilters()
-	{
-		if (XenForo_Application::isRegistered('routeFiltersOut'))
-		{
-			$routeFiltersOut = XenForo_Application::get('routeFiltersOut');
-		}
-		else
-		{
-			$routeFilters = XenForo_Model::create('XenForo_Model_RouteFilter')->rebuildRouteFilterCache();
-
-			$routeFiltersOut = $routeFilters['out'];
-		}
-
-		return $routeFiltersOut;
 	}
 
 	protected function _getNewsFeedModel()
