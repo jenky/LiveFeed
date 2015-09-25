@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<addon addon_id="LiveFeed" title="Live Feed" version_string="1.4.0" version_id="35" url="" install_callback_class="Milano_LiveFeed_Install" install_callback_method="install" uninstall_callback_class="Milano_LiveFeed_Install" uninstall_callback_method="uninstall">
+<addon addon_id="LiveFeed" title="Live Feed" version_string="1.4.0" version_id="36" url="" install_callback_class="Milano_LiveFeed_Install" install_callback_method="install" uninstall_callback_class="Milano_LiveFeed_Install" uninstall_callback_method="uninstall">
   <admin_navigation/>
   <admin_permissions/>
   <admin_style_properties/>
@@ -367,8 +367,12 @@ data-source="{xen:helper feedSource, $controllerName}"]]></replace>
     <modification template="news_feed" modification_key="LiveFeed_news_feed_js" description="Add live feed js" execution_order="10" enabled="1" action="str_replace">
       <find><![CDATA[<xen:require js="js/xenforo/news_feed.js" />]]></find>
       <replace><![CDATA[$0
-<xen:if is="{$xenOptions.LiveFeed_guest}">
+<xen:if is="{$visitor.user_id}">
 	<xen:require js="js/Milano/LiveFeed/live_feed.js" />
+<xen:else />
+	<xen:if is="{$xenOptions.LiveFeed_guest}">
+		<xen:require js="js/Milano/LiveFeed/live_feed.js" />
+	</xen:if>
 </xen:if>]]></replace>
     </modification>
   </public_template_modifications>
