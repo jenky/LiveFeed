@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<addon addon_id="LiveFeed" title="Live Feed" version_string="1.4.0" version_id="34" url="" install_callback_class="Milano_LiveFeed_Install" install_callback_method="install" uninstall_callback_class="Milano_LiveFeed_Install" uninstall_callback_method="uninstall">
+<addon addon_id="LiveFeed" title="Live Feed" version_string="1.4.0" version_id="35" url="" install_callback_class="Milano_LiveFeed_Install" install_callback_method="install" uninstall_callback_class="Milano_LiveFeed_Install" uninstall_callback_method="uninstall">
   <admin_navigation/>
   <admin_permissions/>
   <admin_style_properties/>
@@ -114,19 +114,25 @@
   <email_templates/>
   <email_template_modifications/>
   <optiongroups>
+    <option option_id="LiveFeed_guest" edit_format="onoff" data_type="unsigned_integer" can_backup="1">
+      <default_value>0</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="newsfeed" display_order="1010"/>
+    </option>
     <option option_id="LiveFeed_interval" edit_format="spinbox" data_type="positive_integer" can_backup="1">
       <default_value>30</default_value>
       <edit_format_params>min=5
 step=5</edit_format_params>
       <sub_options></sub_options>
-      <relation group_id="newsfeed" display_order="1010"/>
+      <relation group_id="newsfeed" display_order="1110"/>
     </option>
     <option option_id="LiveFeed_widget" edit_format="template" data_type="array" can_backup="1">
       <default_value>a:2:{s:7:"enabled";b:0;s:8:"position";b:0;}</default_value>
       <edit_format_params>LiveFeed_option_widget</edit_format_params>
       <sub_options>enabled
 position</sub_options>
-      <relation group_id="newsfeed" display_order="1020"/>
+      <relation group_id="newsfeed" display_order="1120"/>
     </option>
   </optiongroups>
   <permissions>
@@ -141,6 +147,8 @@ position</sub_options>
     <phrase title="LiveFeed_below_share_page" version_id="30" version_string="1.3.0"><![CDATA[Below share page]]></phrase>
     <phrase title="LiveFeed_below_visitor_panel" version_id="30" version_string="1.3.0"><![CDATA[Below visitor panel]]></phrase>
     <phrase title="LiveFeed_show_only_my_news_feed" version_id="25" version_string="1.1.1"><![CDATA[Show only my news feed]]></phrase>
+    <phrase title="option_LiveFeed_guest" version_id="34" version_string="1.4.0"><![CDATA[Enable Live Feed for guest]]></phrase>
+    <phrase title="option_LiveFeed_guest_explain" version_id="34" version_string="1.4.0"><![CDATA[]]></phrase>
     <phrase title="option_LiveFeed_interval" version_id="31" version_string="1.3.0"><![CDATA[Live Feed Polling Interval]]></phrase>
     <phrase title="option_LiveFeed_interval_explain" version_id="1" version_string="1.0.0"><![CDATA[Set the amount of time in seconds to fetch the News Feed.]]></phrase>
     <phrase title="option_LiveFeed_widget" version_id="31" version_string="1.3.0"><![CDATA[Enabled Widget]]></phrase>
@@ -359,7 +367,9 @@ data-source="{xen:helper feedSource, $controllerName}"]]></replace>
     <modification template="news_feed" modification_key="LiveFeed_news_feed_js" description="Add live feed js" execution_order="10" enabled="1" action="str_replace">
       <find><![CDATA[<xen:require js="js/xenforo/news_feed.js" />]]></find>
       <replace><![CDATA[$0
-<xen:require js="js/Milano/LiveFeed/live_feed.js" />]]></replace>
+<xen:if is="{$xenOptions.LiveFeed_guest}">
+	<xen:require js="js/Milano/LiveFeed/live_feed.js" />
+</xen:if>]]></replace>
     </modification>
   </public_template_modifications>
   <bb_code_media_sites/>
